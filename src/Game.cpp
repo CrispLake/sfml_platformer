@@ -359,3 +359,8 @@ Door* Game::getDoor() const
 {
     return m_pDoor.get();
 }
+
+void Game::resetCurrentLevel()
+{
+    resetLevel(Maps[m_clearedLevels]);
+}

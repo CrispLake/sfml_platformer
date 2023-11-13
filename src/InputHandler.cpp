@@ -24,6 +24,10 @@ void GameInput::update(float deltaTime)
     {
         m_pGame->throwBall(m_inputData, deltaTime);
     }
+    if (m_inputData.hasReset())
+    {
+        m_pGame->resetCurrentLevel();
+    }
 }
 
 void GameInput::onKeyPressed(sf::Keyboard::Key key)
@@ -31,10 +35,6 @@ void GameInput::onKeyPressed(sf::Keyboard::Key key)
     if (key == sf::Keyboard::Up)
     {
         m_inputData.m_movingUp = true;
-    }
-    else if (key == sf::Keyboard::Down)
-    {
-        m_inputData.m_movingDown = true;
     }
     else if (key == sf::Keyboard::Left)
     {
@@ -44,6 +44,10 @@ void GameInput::onKeyPressed(sf::Keyboard::Key key)
     {
         m_inputData.m_movingRight = true;
     }
+    else if (key == sf::Keyboard::Enter)
+    {
+        m_inputData.m_resetButton = true;
+    }
 }
 
 void GameInput::onKeyReleased(sf::Keyboard::Key key)
@@ -52,10 +56,6 @@ void GameInput::onKeyReleased(sf::Keyboard::Key key)
     {
         m_inputData.m_movingUp = false;
     }
-    else if (key == sf::Keyboard::Down)
-    {
-        m_inputData.m_movingDown = false;
-    }
     else if (key == sf::Keyboard::Left)
     {
         m_inputData.m_movingLeft = false;
@@ -63,6 +63,10 @@ void GameInput::onKeyReleased(sf::Keyboard::Key key)
     else if (key == sf::Keyboard::Right)
     {
         m_inputData.m_movingRight = false;
+    }
+    else if (key == sf::Keyboard::Enter)
+    {
+        m_inputData.m_resetButton = false;
     }
 }
 

@@ -17,8 +17,11 @@ struct InputData
     float m_mouseX = 0.0f;
     float m_mouseY = 0.0f;
 
+    bool m_resetButton = false;
+
     bool hasInputs() { return m_movingUp || m_movingDown || m_movingLeft || m_movingRight;}
     bool hasClick() { return m_leftClick;}
+    bool hasReset() { return m_resetButton; }
 };
 
 class GameInput

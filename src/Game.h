@@ -53,6 +53,8 @@ public:
 
     void DecreaseButtonCounter() { m_buttonCount--;}
 
+    void resetCurrentLevel();
+
     Door*                   getDoor() const;
     std::vector<Rectangle*> getRectangles() const;
     std::vector<Coin*>      getCoins() const;
