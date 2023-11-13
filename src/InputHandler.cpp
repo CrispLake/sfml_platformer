@@ -22,7 +22,7 @@ void GameInput::update(float deltaTime)
     }
     if (m_inputData.hasClick())
     {
-        m_pGame->handleClick(m_inputData, deltaTime);
+        m_pGame->throwBall(m_inputData, deltaTime);
     }
 }
 

@@ -104,20 +104,9 @@ void Game::update(float deltaTime)
             m_pPlayer->updatePhysics(deltaTime);
             m_pPlayer->update(deltaTime);
 
-            if (m_ballCount < BallMaxCount)
-            {
-                m_ballReloadTime -= deltaTime;
-                if (m_ballReloadTime < 0.0f)
-                {
-                    m_ballCount++;
-                    m_ballReloadTime = 5.0f;
-                }
-            }
-            m_ballThrowDelay -= deltaTime;
-            if (m_ballThrowDelay < 0.0f)
-            {
-                m_ballThrowDelay = 0.0f;
-            }
+            updateBallDelays(deltaTime);
+            updateBallPhysics(deltaTime);
+            
 
             if (m_pPlayer->isDead())
             {
@@ -158,8 +147,6 @@ void Game::update(float deltaTime)
         }
         i++;
     }
-
-    
 }
 
 void Game::draw(sf::RenderTarget &target, sf::RenderStates states) const
@@ -241,16 +228,50 @@ void Game::onMouseMove(int mouseX, int mouseY)
     m_pGameInput->onMouseMove(mouseX, mouseY);
 }
 
-void Game::handleClick(InputData inputData, float deltaTime)
+void Game::throwBall(InputData inputData, float deltaTime)
 {
 
     if (m_ballCount > 0 && m_ballThrowDelay == 0.0f)
     {
-        const sf::Vector2f worldPos = sf::Vector2f(inputData.m_mouseX - BallRadius * BallOffset, inputData.m_mouseY - BallRadius * BallOffset);
+        const sf::Vector2f worldPos = sf::Vector2f(inputData.m_mouseX - BallRadius * BallOffsetToMouse, inputData.m_mouseY - BallRadius * BallOffsetToMouse);
         m_pBalls.push_back(std::make_unique<Ball>(BallRadius, worldPos));
         m_ballCount--;
         m_ballReloadTime = 5.0f;
         m_ballThrowDelay = BallThrowDelay;
+    }
+}
+
+void Game::updateBallDelays(float deltaTime)
+{
+    if (m_ballCount < BallMaxCount)
+    {
+        m_ballReloadTime -= deltaTime;
+        if (m_ballReloadTime < 0.0f)
+        {
+            m_ballCount++;
+            m_ballReloadTime = 5.0f;
+        }
+    }
+    m_ballThrowDelay -= deltaTime;
+    if (m_ballThrowDelay < 0.0f)
+    {
+        m_ballThrowDelay = 0.0f;
+    }
+}
+
+void Game::updateBallPhysics(float deltaTime)
+{
+    int i = 0;
+    while (i < m_pBalls.size())
+    {
+        m_pBalls[i]->updatePhysics(deltaTime);
+        if (m_pBalls[i]->isDead())
+        {
+            std::swap(m_pBalls[i], m_pBalls.back());
+            m_pBalls.pop_back();
+            continue;
+        }
+        i++;
     }
 }
 

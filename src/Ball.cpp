@@ -4,7 +4,10 @@
 #include "MathUtils.h"
 #include "Constants.h"
 
-Ball::Ball(float radius, sf::Vector2f position) : m_radius(radius)
+Ball::Ball(float radius, sf::Vector2f position) :
+    m_radius(radius),
+    m_lifeTimer(BallLifetime),
+    m_isDead(false)
 {
     float rOffset = BallRadius;
     position -= sf::Vector2f(rOffset, rOffset);
@@ -49,4 +52,7 @@ void Ball::updatePhysics(float deltaTime)
     float yPos = getPosition().y;
     
     m_isDead = yPos > ScreenHeight;
+    m_lifeTimer -= deltaTime;
+    if (m_lifeTimer < 0.0f)
+        m_isDead = true;
 }

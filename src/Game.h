@@ -46,7 +46,9 @@ public:
     void onMouseReleased(sf::Mouse::Button button);
     void onMouseMove(int mouseX, int mouseY);
 
-    void handleClick(InputData inputData, float deltaTime);
+    void throwBall(InputData inputData, float deltaTime);
+    void updateBallDelays(float deltaTime);
+    void updateBallPhysics(float deltaTime);
 
     Door*                   getDoor();
     std::vector<Rectangle*> getRectangles() const;
