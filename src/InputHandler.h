@@ -8,7 +8,7 @@ class Game;
 
 struct InputData
 {
-    bool m_movingUp = true;
+    bool m_movingUp = false;
     bool m_movingDown = false;
     bool m_movingLeft = false;
     bool m_movingRight = false;
