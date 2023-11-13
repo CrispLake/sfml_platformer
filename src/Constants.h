@@ -10,6 +10,8 @@ const float PlayerHeight = 60.0f;
 const float PlayerWidth = 40.0f;
 const float PlayerSpeed = 155.0f;
 const float PlayerJumpTime = 0.7f;
+const float PlayerDefaultSpawnX = ScreenWidth * 0.5f;
+const float PlayerDefaultSpawnY = ScreenHeight * 0.5f;
 
 const float CoinRadius = 17.0f;
 

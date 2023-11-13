@@ -8,7 +8,7 @@
 
 Player::Player(Game* pGame) : Rectangle(sf::Vector2f(PlayerWidth, PlayerHeight)), m_pGame(pGame)
 {
-    setPosition(sf::Vector2f(ScreenWidth * 0.5f, ScreenHeight * 0.5f)); //TODO: spawn position constant?
+    setPosition(sf::Vector2f(PlayerDefaultSpawnX, PlayerDefaultSpawnY));
     setOrigin(sf::Vector2f(0.0f, 0.0f));
     setColor(sf::Color::Blue);
 }
