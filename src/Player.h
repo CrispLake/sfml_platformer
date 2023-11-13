@@ -19,6 +19,7 @@ public:
     void update(float deltaTime);
 
     int getCoins() const { return m_coins; };
+    void    clearCoins() { m_coins = 0; };
 
     bool isDead() const { return m_isDead; }
     void setIsDead(bool isDead) { m_isDead = isDead; }

@@ -101,7 +101,10 @@ void Game::update(float deltaTime)
             m_pPlayer->update(deltaTime);
 
             if (m_pPlayer->isDead())
+            {
+                m_pPlayer->clearCoins();
                 resetLevel(MapArray1);
+            }
                 
             if (m_pDoor->isTriggered())
             {
