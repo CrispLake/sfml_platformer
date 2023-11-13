@@ -3,11 +3,15 @@
 #include "Rectangle.h"
 #include "MathUtils.h"
 #include "Constants.h"
+#include "Game.h"
 
-Ball::Ball(float radius, sf::Vector2f position) :
+Ball::Ball(Game* pGame, float radius, sf::Vector2f position)  :
     m_radius(radius),
     m_lifeTimer(BallLifetime),
-    m_isDead(false)
+    m_isDead(false),
+    m_CurrentXSpeed(0.0f),
+    m_CurrentYSpeed(Gravity / 2),
+    m_pGame(pGame)
 {
     float rOffset = BallRadius;
     position -= sf::Vector2f(rOffset, rOffset);
@@ -17,18 +21,21 @@ Ball::Ball(float radius, sf::Vector2f position) :
 
 bool Ball::collidesWith(Rectangle* other)
 {
-    sf::Vector2f position = other->getPosition();
-    sf::Vector2f size = other->getSize();
+    sf::Vector2f otherPosition = other->getPosition();
+    sf::Vector2f otherSize = other->getSize();
 
-    sf::Vector2f topLeft = position;
-    sf::Vector2f topRight = position + sf::Vector2f(size.x, 0);
-    sf::Vector2f botLeft = position + sf::Vector2f(0, size.y);
-    sf::Vector2f botRight = position + size;
-
-    return VecLength(topRight - getCenter()) < m_radius ||
-        VecLength(topLeft - getCenter()) < m_radius ||
-        VecLength(botRight - getCenter()) < m_radius ||
-        VecLength(botLeft - getCenter()) < m_radius;
+    float otherLeft = otherPosition.x;
+    float otherRight = otherPosition.x + otherSize.x;
+    float otherTop = otherPosition.y;
+    float otherBottom = otherPosition.y + otherSize.y;
+ 
+    if (getCenter().x - m_radius * 0.5f < otherRight &&
+        getCenter().x + m_radius > otherLeft &&
+        getCenter().y - m_radius * 0.5f < otherBottom &&
+        getCenter().y + m_radius > otherTop) {
+        return true;
+    }
+    return false;
 }
 
 void Ball::draw(sf::RenderTarget &target, sf::RenderStates states) const
@@ -47,6 +54,34 @@ sf::Vector2f Ball::getCenter()
     return getPosition() + sf::Vector2f(rOffset, rOffset);
 }
 
+void Ball::updateXSpeed(float deltaTime)
+{
+    sf::Transformable::move(m_CurrentXSpeed * deltaTime, 0.0f);
+    auto pRectangles = m_pGame->getRectangles();
+    for (auto& pRectangle : pRectangles)
+    {
+        if (collidesWith(pRectangle))
+        {
+            m_CurrentXSpeed = -m_CurrentXSpeed;
+            sf::Transformable::move(sf::Vector2f(m_CurrentXSpeed * deltaTime, 0.0f));
+        }
+    }
+}
+
+void Ball::updateYSpeed(float deltaTime)
+{
+    sf::Transformable::move(0.0f, m_CurrentYSpeed * deltaTime);
+    auto pRectangles = m_pGame->getRectangles();
+    for (auto& pRectangle : pRectangles)
+    {
+        if (collidesWith(pRectangle))
+        {
+            m_CurrentYSpeed = -m_CurrentYSpeed;
+            sf::Transformable::move(0.0f, m_CurrentYSpeed * deltaTime);
+        }
+    }
+}
+
 void Ball::updatePhysics(float deltaTime)
 {
     float yPos = getPosition().y;
@@ -55,4 +90,6 @@ void Ball::updatePhysics(float deltaTime)
     m_lifeTimer -= deltaTime;
     if (m_lifeTimer < 0.0f)
         m_isDead = true;
+    updateXSpeed(deltaTime);
+    updateYSpeed(deltaTime);
 }

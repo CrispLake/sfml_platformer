@@ -4,11 +4,12 @@
 #include <SFML/Graphics/Transformable.hpp>
 
 class Rectangle;
+class Game;
 
 class Ball : public sf::Drawable, public sf::Transformable
 {
 public:
-    Ball(float radius, sf::Vector2f position = sf::Vector2f(0, 0));
+    Ball(Game* pGame, float radius, sf::Vector2f position = sf::Vector2f(0, 0));
     virtual ~Ball() {}
     
     bool collidesWith(Rectangle* other);
@@ -18,6 +19,8 @@ public:
     sf::Vector2f getCenter();
 
     void updatePhysics(float deltaTime);
+    void updateXSpeed(float deltaTime);
+    void updateYSpeed(float deltaTime);
     
     bool isDead() const { return m_isDead; }
     void setIsDead(bool isDead) { m_isDead = isDead; }
@@ -30,5 +33,7 @@ private:
 
     float   m_CurrentYSpeed;
     float   m_CurrentXSpeed;
+
+    Game*   m_pGame;
     
 };

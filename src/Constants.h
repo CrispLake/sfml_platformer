@@ -21,7 +21,7 @@ const int   BallMaxCount = 3;
 const float BallReloadTime = 3.0f;
 const float BallThrowDelay = 0.5f;
 const float BallOffsetToMouse = 2.0f;
-const float BallLifetime = 4.0f;
+const float BallLifetime = 10.0f;
 
 const int GridSize = 16;
 

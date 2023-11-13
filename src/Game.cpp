@@ -234,7 +234,7 @@ void Game::throwBall(InputData inputData, float deltaTime)
     if (m_ballCount > 0 && m_ballThrowDelay == 0.0f)
     {
         const sf::Vector2f worldPos = sf::Vector2f(inputData.m_mouseX - BallRadius * BallOffsetToMouse, inputData.m_mouseY - BallRadius * BallOffsetToMouse);
-        m_pBalls.push_back(std::make_unique<Ball>(BallRadius, worldPos));
+        m_pBalls.push_back(std::make_unique<Ball>(this, BallRadius, worldPos));
         m_ballCount--;
         m_ballReloadTime = 5.0f;
         m_ballThrowDelay = BallThrowDelay;
