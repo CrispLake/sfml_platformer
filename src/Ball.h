@@ -9,7 +9,7 @@ class Game;
 class Ball : public sf::Drawable, public sf::Transformable
 {
 public:
-    Ball(Game* pGame, float radius, sf::Vector2f position = sf::Vector2f(0, 0));
+    Ball(Game* pGame, float radius, sf::Vector2f position = sf::Vector2f(0, 0), sf::Vector2f velocity = sf::Vector2f(0, 0));
     virtual ~Ball() {}
     
     bool collidesWith(Rectangle* other);

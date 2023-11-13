@@ -233,8 +233,23 @@ void Game::throwBall(InputData inputData, float deltaTime)
 
     if (m_ballCount > 0 && m_ballThrowDelay == 0.0f)
     {
-        const sf::Vector2f worldPos = sf::Vector2f(inputData.m_mouseX - BallRadius * BallOffsetToMouse, inputData.m_mouseY - BallRadius * BallOffsetToMouse);
-        m_pBalls.push_back(std::make_unique<Ball>(this, BallRadius, worldPos));
+        sf::Vector2f playerPos = m_pPlayer->getCenter();
+
+        float x1 = playerPos.x;
+        float y1 = playerPos.y;
+        float x2 = inputData.m_mouseX;
+        float y2 = inputData.m_mouseY;
+
+        float speed = Gravity;
+
+        float deltaX = x2 - x1;
+        float deltaY = y2 - y1;
+
+        float magnitude = sqrt(deltaX * deltaX + deltaY * deltaY);
+
+        sf::Vector2f Velocity((deltaX / magnitude) * speed, (deltaY / magnitude) * speed);
+
+        m_pBalls.push_back(std::make_unique<Ball>(this, BallRadius, playerPos, Velocity));
         m_ballCount--;
         m_ballReloadTime = 5.0f;
         m_ballThrowDelay = BallThrowDelay;

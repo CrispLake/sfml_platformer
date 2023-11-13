@@ -5,12 +5,12 @@
 #include "Constants.h"
 #include "Game.h"
 
-Ball::Ball(Game* pGame, float radius, sf::Vector2f position)  :
+Ball::Ball(Game* pGame, float radius, sf::Vector2f position, sf::Vector2f velocity)  :
     m_radius(radius),
     m_lifeTimer(BallLifetime),
     m_isDead(false),
-    m_CurrentXSpeed(0.0f),
-    m_CurrentYSpeed(Gravity / 2),
+    m_CurrentXSpeed(velocity.x),
+    m_CurrentYSpeed(velocity.y),
     m_pGame(pGame)
 {
     float rOffset = BallRadius;
