@@ -196,6 +196,26 @@ void Game::onKeyReleased(sf::Keyboard::Key key)
     m_pGameInput->onKeyReleased(key);
 }
 
+void Game::onMousePressed(sf::Mouse::Button button, int mouseX, int mouseY)
+{
+    m_pGameInput->onMousePressed(button, mouseX, mouseY);
+}
+
+void Game::onMouseReleased(sf::Mouse::Button button)
+{
+    m_pGameInput->onMouseReleased(button);
+}
+
+void Game::onMouseMove(int mouseX, int mouseY)
+{
+    m_pGameInput->onMouseMove(mouseX, mouseY);
+}
+
+void Game::handleClick(InputData inputData, float deltaTime)
+{
+    std::cout << "Click on: " << inputData.m_mouseX << ", " << inputData.m_mouseY << std::endl;
+}
+
 std::vector<Coin*> Game::getCoins()
 {
     std::vector<Coin*> pCoins;

@@ -3,6 +3,7 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Window/Keyboard.hpp>
+#include <SFML/Window/Mouse.hpp>
 #include <memory>
 #include "Constants.h"
 
@@ -13,6 +14,8 @@ class Rectangle;
 class Coin;
 class Door;
 class Ball;
+
+struct InputData;
 
 namespace sf { class Clock; }
 
@@ -39,6 +42,11 @@ public:
     
     void onKeyPressed(sf::Keyboard::Key key);
     void onKeyReleased(sf::Keyboard::Key key);
+    void onMousePressed(sf::Mouse::Button button, int mouseX, int mouseY);
+    void onMouseReleased(sf::Mouse::Button button);
+    void onMouseMove(int mouseX, int mouseY);
+
+    void handleClick(InputData inputData, float deltaTime);
 
     Door*                   getDoor();
     std::vector<Rectangle*> getRectangles() const;
