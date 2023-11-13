@@ -100,7 +100,7 @@ void Player::update(float deltaTime)
     {
         if (temp->collidesWith(this))
         {
-            temp->setCollected(true);
+            temp->setActivated();
         }
     }
 

@@ -92,7 +92,7 @@ void Ball::updateXSpeed(float deltaTime)
     {
         if (collidesWith(pButton))
         {
-            pButton->setCollected(true);
+            pButton->setActivated();
         }
     }
 }
@@ -116,7 +116,7 @@ void Ball::updateYSpeed(float deltaTime)
     {
         if (collidesWith(pButton))
         {
-            pButton->setCollected(true);
+            pButton->setActivated();
         }
     }
 }

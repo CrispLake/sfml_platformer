@@ -51,6 +51,8 @@ public:
     void updateBallDelays(float deltaTime);
     void updateBallPhysics(float deltaTime);
 
+    void DecreaseButtonCounter() { m_buttonCount--;}
+
     Door*                   getDoor() const;
     std::vector<Rectangle*> getRectangles() const;
     std::vector<Coin*>      getCoins() const;

@@ -3,13 +3,15 @@
 #include "Rectangle.h"
 #include "MathUtils.h"
 #include "Constants.h"
+#include "Game.h"
 
-Button::Button(float radius, sf::Vector2f position) : m_radius(radius)
+Button::Button(Game* pGame, float radius, sf::Vector2f position) : m_radius(radius), m_pGame(pGame)
 {
     float rOffset = CoinRadius;
     position -= sf::Vector2f(rOffset, rOffset);
     position += sf::Vector2f(TileSizeX, TileSizeY) * 0.5f;
     sf::Transformable::setPosition(position);
+    m_color = sf::Color::Red;
 }
 
 bool Button::collidesWith(Rectangle* other)
@@ -35,7 +37,7 @@ void Button::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     sf::CircleShape graphicsCircle(m_radius);
 
-    graphicsCircle.setFillColor(sf::Color::Green);
+    graphicsCircle.setFillColor(m_color);
     graphicsCircle.setPosition(getPosition());
     target.draw(graphicsCircle);
 }
@@ -47,12 +49,12 @@ sf::Vector2f Button::getCenter()
     return getPosition() + sf::Vector2f(rOffset, rOffset);
 }
 
-void Button::setCollected(bool isCollected)
+void Button::setActivated()
 {
-    m_isCollected = isCollected;
-}
-
-bool Button::getCollected()
-{
-    return m_isCollected;
+    if (!m_isActivated)
+    {
+        m_color = sf::Color::Green;
+        m_pGame->DecreaseButtonCounter();
+        m_isActivated = true;
+    }
 }

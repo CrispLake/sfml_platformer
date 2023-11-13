@@ -85,7 +85,7 @@ void Game::resetLevel(const int* tileMap)
                     m_pDoor->setPosition(worldPos);
                     break;
                 case    eTile::eButton:
-                    m_pButtons.push_back(std::make_unique<Button>(CoinRadius, worldPos));
+                    m_pButtons.push_back(std::make_unique<Button>(this, CoinRadius, worldPos));
                     m_buttonCount++;
                     break;
                 default:
@@ -160,19 +160,6 @@ void Game::update(float deltaTime)
         {
             std::swap(m_pCoins[i], m_pCoins.back());
             m_pCoins.pop_back();
-            continue;
-        }
-        i++;
-    }
-
-    i = 0;
-    while (i < m_pButtons.size())
-    {
-        if (m_pButtons[i]->getCollected())
-        {
-            std::swap(m_pButtons[i], m_pButtons.back());
-            m_pButtons.pop_back();
-            m_buttonCount--;
             continue;
         }
         i++;
