@@ -82,7 +82,7 @@ void Game::resetLevel(const int* tileMap)
                     m_pPlayer->setPosition(worldPos);
                     break;
                 case    eTile::eDoor:
-                    m_pDoor->setPosition(worldPos);
+                    m_pDoor->setPosition(sf::Vector2f(worldPos.x, worldPos.y - 22));
                     break;
                 case    eTile::eButton:
                     m_pButtons.push_back(std::make_unique<Button>(this, CoinRadius, worldPos));
