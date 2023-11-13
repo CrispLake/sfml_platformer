@@ -159,7 +159,7 @@ void Game::draw(sf::RenderTarget &target, sf::RenderStates states) const
         coinText.setStyle(sf::Text::Bold);
         coinText.setString(std::to_string(m_pPlayer->getCoins()));
         coinText.setColor(sf::Color::Yellow);
-        coinText.setPosition(sf::Vector2f(ScreenWidth - coinText.getLocalBounds().getSize().x, 0));
+        coinText.setPosition(sf::Vector2f(ScreenWidth - coinText.getLocalBounds().getSize().x - 5, 0));
         target.draw(coinText);
     }
 
