@@ -33,7 +33,7 @@ void Player::move(InputData inputData, float deltaTime)
         }
     }
     
-    setPosition(std::clamp(getPosition().x, 0.0f, (float)ScreenWidth), getPosition().y); //TODO: clean
+    setPosition(std::clamp(getPosition().x, 0.0f, (float)ScreenWidth - PlayerWidth), getPosition().y); //TODO: clean
 
     if (inputData.m_movingUp && m_jumpTimer == 0.0f && m_isGrounded)
     {
