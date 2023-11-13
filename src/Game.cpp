@@ -11,6 +11,7 @@
 #include "Coin.h"
 #include "Door.h"
 #include "Ball.h"
+#include "Maps.h"
 
 Game::Game() :
     m_state(State::WAITING),
@@ -51,6 +52,8 @@ void Game::resetLevel(const int* tileMap)
 {
     m_pCoins.clear();
     m_pRectangles.clear();
+    m_pBalls.clear();
+    m_ballCount = BallMaxCount;
 
     m_pPlayer->setIsDead(false);
     m_pDoor->setTriggered(false);
@@ -125,17 +128,17 @@ void Game::update(float deltaTime)
                     m_score = 0;
                     m_state = State::WAITING;
                     m_pClock->restart();
-                    resetLevel(MapArray1);
+                    resetLevel(Maps[0]);
                 }
                 else
                 {
-                    resetLevel(MapArray2);
+                    resetLevel(Maps[m_clearedLevels]);
                 }
-                
             }
         }
         break;
     }
+
     int i = 0;
     while (i < m_pCoins.size())
     {
