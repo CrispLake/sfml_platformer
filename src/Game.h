@@ -69,6 +69,10 @@ private:
     int m_clearedLevels;
     
     int m_score;
+
+    int m_ballCount;
+    float m_ballReloadTime;
+    float m_ballThrowDelay;
     
     sf::Font m_font;
 };

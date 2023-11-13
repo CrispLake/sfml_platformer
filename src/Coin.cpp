@@ -1,4 +1,3 @@
-
 #include "Coin.h"
 #include <SFML/Graphics.hpp>
 #include "Rectangle.h"

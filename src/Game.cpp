@@ -18,7 +18,10 @@ Game::Game() :
     m_pPlayer(std::make_unique<Player>(this)),
     m_pDoor(std::make_unique<Door>(this)),
     m_score(0),
-    m_clearedLevels(0)
+    m_clearedLevels(0),
+    m_ballCount(BallMaxCount),
+    m_ballReloadTime(0),
+    m_ballThrowDelay(BallThrowDelay)
 {
     
     m_pGameInput = std::make_unique<GameInput>(this, m_pPlayer.get());
@@ -69,10 +72,10 @@ void Game::resetLevel(const int* tileMap)
                 case    eTile::eBlock:
                     m_pRectangles.push_back(std::make_unique<Rectangle>(tileSize, worldPos));
                     break;
-                case    eTile::ePlayerSpawn :
+                case    eTile::ePlayerSpawn:
                     m_pPlayer->setPosition(worldPos);
                     break;
-                case    eTile::eDoor :
+                case    eTile::eDoor:
                     m_pDoor->setPosition(worldPos);
                     break;
                 default:
@@ -100,6 +103,21 @@ void Game::update(float deltaTime)
             m_pGameInput->update(deltaTime);
             m_pPlayer->updatePhysics(deltaTime);
             m_pPlayer->update(deltaTime);
+
+            if (m_ballCount < BallMaxCount)
+            {
+                m_ballReloadTime -= deltaTime;
+                if (m_ballReloadTime < 0.0f)
+                {
+                    m_ballCount++;
+                    m_ballReloadTime = 5.0f;
+                }
+            }
+            m_ballThrowDelay -= deltaTime;
+            if (m_ballThrowDelay < 0.0f)
+            {
+                m_ballThrowDelay = 0.0f;
+            }
 
             if (m_pPlayer->isDead())
             {
@@ -168,6 +186,14 @@ void Game::draw(sf::RenderTarget &target, sf::RenderStates states) const
         coinText.setPosition(sf::Vector2f(ScreenWidth - coinText.getLocalBounds().getSize().x - 5, 0));
         target.draw(coinText);
     }
+    sf::Text ballText;
+    ballText.setFont(m_font);
+    ballText.setFillColor(sf::Color::White);
+    ballText.setStyle(sf::Text::Bold);
+    ballText.setString("Balls: " + std::to_string(m_ballCount));
+    ballText.setColor(sf::Color::Yellow);
+    ballText.setPosition(sf::Vector2f(5, 0));
+    target.draw(ballText);
 
     // Draw player.
     m_pPlayer->draw(target, states);
@@ -178,6 +204,10 @@ void Game::draw(sf::RenderTarget &target, sf::RenderStates states) const
         temp->draw(target, states);
     }
     for (auto& temp : m_pRectangles)
+    {
+        temp->draw(target, states);
+    }
+    for (auto& temp : m_pBalls)
     {
         temp->draw(target, states);
     }
@@ -213,7 +243,15 @@ void Game::onMouseMove(int mouseX, int mouseY)
 
 void Game::handleClick(InputData inputData, float deltaTime)
 {
-    std::cout << "Click on: " << inputData.m_mouseX << ", " << inputData.m_mouseY << std::endl;
+
+    if (m_ballCount > 0 && m_ballThrowDelay == 0.0f)
+    {
+        const sf::Vector2f worldPos = sf::Vector2f(inputData.m_mouseX - BallRadius * BallOffset, inputData.m_mouseY - BallRadius * BallOffset);
+        m_pBalls.push_back(std::make_unique<Ball>(BallRadius, worldPos));
+        m_ballCount--;
+        m_ballReloadTime = 5.0f;
+        m_ballThrowDelay = BallThrowDelay;
+    }
 }
 
 std::vector<Coin*> Game::getCoins()

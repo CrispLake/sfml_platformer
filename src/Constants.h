@@ -17,6 +17,10 @@ const float CoinRadius = 17.0f;
 
 const float BallRadius = 10.0f;
 const float BallBounciness = 0.9f;
+const int   BallMaxCount = 3;
+const float BallReloadTime = 3.0f;
+const float BallThrowDelay = 0.5f;
+const float BallOffset = 2.0f;
 
 const int GridSize = 16;
 

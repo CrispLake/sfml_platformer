@@ -27,5 +27,8 @@ private:
     float   m_radius;
     float   m_lifeTimer = 3.0f;
     bool    m_isDead = false;
+
+    float   m_CurrentYSpeed;
+    float   m_CurrentXSpeed;
     
 };

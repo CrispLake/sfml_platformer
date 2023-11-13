@@ -1,4 +1,3 @@
-
 #include "Ball.h"
 #include <SFML/Graphics.hpp>
 #include "Rectangle.h"
@@ -33,7 +32,7 @@ void Ball::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     sf::CircleShape graphicsCircle(m_radius);
 
-    graphicsCircle.setFillColor(sf::Color::Yellow);
+    graphicsCircle.setFillColor(sf::Color::Red);
     graphicsCircle.setPosition(getPosition());
     target.draw(graphicsCircle);
 }
