@@ -103,6 +103,7 @@ void Game::update(float deltaTime)
             if (m_pPlayer->isDead())
             {
                 m_pPlayer->clearCoins();
+                m_clearedLevels = 0;
                 resetLevel(MapArray1);
             }
                 
