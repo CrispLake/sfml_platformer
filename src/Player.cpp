@@ -74,8 +74,11 @@ void Player::updatePhysics(float deltaTime)
                 m_jumpTimer = 0.0f;
         }
     }
+    float yPos = getPosition().y;
+    if (yPos < 0)
+        m_jumpTimer = 0.0f;
     
-    m_isDead = getPosition().y > ScreenHeight;
+    m_isDead = yPos > ScreenHeight;
 }
 
 void Player::update(float deltaTime)
