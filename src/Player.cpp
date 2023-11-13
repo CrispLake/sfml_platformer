@@ -33,7 +33,7 @@ void Player::move(InputData inputData, float deltaTime)
         }
     }
     
-    setPosition(std::clamp(getPosition().x, 0.0f, (float)ScreenWidth - PlayerWidth), getPosition().y); //TODO: clean
+    setPosition(std::clamp(getPosition().x, 0.0f, (float)ScreenWidth - PlayerWidth), getPosition().y);
 
     if (inputData.m_movingUp && m_jumpTimer == 0.0f && m_isGrounded)
     {
@@ -68,7 +68,10 @@ void Player::updatePhysics(float deltaTime)
         if (pRectangle->collidesWith(this))
         {
             sf::Transformable::move(sf::Vector2f(0.0f, -ySpeed * deltaTime));
-            m_isGrounded = true;
+            if (ySpeed > 0)
+                m_isGrounded = true;
+            else
+                m_jumpTimer = 0.0f;
         }
     }
     
