@@ -290,7 +290,7 @@ void Game::updateBallPhysics(float deltaTime)
     }
 }
 
-std::vector<Coin*> Game::getCoins()
+std::vector<Coin*> Game::getCoins() const
 {
     std::vector<Coin*> pCoins;
 
@@ -301,7 +301,7 @@ std::vector<Coin*> Game::getCoins()
     return pCoins;
 }
 
-std::vector<Ball*> Game::getBalls()
+std::vector<Ball*> Game::getBalls() const
 {
     std::vector<Ball*> pBalls;
 
@@ -323,7 +323,7 @@ std::vector<Rectangle*> Game::getRectangles() const
     return (pRectangles);
 }
 
-Door* Game::getDoor()
+Door* Game::getDoor() const
 {
     return m_pDoor.get();
 }

@@ -50,10 +50,10 @@ public:
     void updateBallDelays(float deltaTime);
     void updateBallPhysics(float deltaTime);
 
-    Door*                   getDoor();
+    Door*                   getDoor() const;
     std::vector<Rectangle*> getRectangles() const;
-    std::vector<Coin*>      getCoins();
-    std::vector<Ball*>      getBalls();
+    std::vector<Coin*>      getCoins() const;
+    std::vector<Ball*>      getBalls() const;
 
 
 private:
