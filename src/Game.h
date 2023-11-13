@@ -12,6 +12,7 @@ class GameInput;
 class Rectangle;
 class Coin;
 class Door;
+class Ball;
 
 namespace sf { class Clock; }
 
@@ -42,6 +43,7 @@ public:
     Door*                   getDoor();
     std::vector<Rectangle*> getRectangles() const;
     std::vector<Coin*>      getCoins();
+    std::vector<Ball*>      getBalls();
 
 
 private:
@@ -50,6 +52,7 @@ private:
 
     std::vector<std::unique_ptr<Rectangle>> m_pRectangles;
     std::vector<std::unique_ptr<Coin>> m_pCoins;
+    std::vector<std::unique_ptr<Ball>> m_pBalls;
 
     State m_state;
     std::unique_ptr<sf::Clock> m_pClock;

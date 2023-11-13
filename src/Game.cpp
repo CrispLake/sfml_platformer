@@ -10,6 +10,7 @@
 #include "Rectangle.h"
 #include "Coin.h"
 #include "Door.h"
+#include "Ball.h"
 
 Game::Game() :
     m_state(State::WAITING),
@@ -204,6 +205,17 @@ std::vector<Coin*> Game::getCoins()
         pCoins.push_back(temp.get());
     }
     return pCoins;
+}
+
+std::vector<Ball*> Game::getBalls()
+{
+    std::vector<Ball*> pBalls;
+
+    for (auto& temp : m_pBalls)
+    {
+        pBalls.push_back(temp.get());
+    }
+    return pBalls;
 }
 
 std::vector<Rectangle*> Game::getRectangles() const

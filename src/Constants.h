@@ -15,6 +15,9 @@ const float PlayerDefaultSpawnY = ScreenHeight * 0.5f;
 
 const float CoinRadius = 17.0f;
 
+const float BallRadius = 10.0f;
+const float BallBounciness = 0.9f;
+
 const int GridSize = 16;
 
 const float TileSizeX = ScreenWidth / (float)GridSize;
