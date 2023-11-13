@@ -16,6 +16,7 @@ public:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
     sf::Vector2f getCenter();
+    float        getRadius() { return m_radius; }
 
     void setCollected(bool isCollected);
 

@@ -4,6 +4,7 @@
 #include "MathUtils.h"
 #include "Constants.h"
 #include "Game.h"
+#include "Button.h"
 
 Ball::Ball(Game* pGame, float radius, sf::Vector2f position, sf::Vector2f velocity)  :
     m_radius(radius),
@@ -28,6 +29,25 @@ bool Ball::collidesWith(Rectangle* other)
     float otherRight = otherPosition.x + otherSize.x;
     float otherTop = otherPosition.y;
     float otherBottom = otherPosition.y + otherSize.y;
+
+    if (getCenter().x - m_radius * 0.5f < otherRight &&
+        getCenter().x + m_radius > otherLeft &&
+        getCenter().y - m_radius * 0.5f < otherBottom &&
+        getCenter().y + m_radius > otherTop) {
+        return true;
+    }
+    return false;
+}
+
+bool Ball::collidesWith(Button* other)
+{
+    sf::Vector2f otherPosition = other->getCenter();
+    float        otherRadius = other->getRadius();
+
+    float otherLeft = otherPosition.x;
+    float otherRight = otherPosition.x + otherRadius;
+    float otherTop = otherPosition.y;
+    float otherBottom = otherPosition.y + otherRadius;
  
     if (getCenter().x - m_radius * 0.5f < otherRight &&
         getCenter().x + m_radius > otherLeft &&
@@ -66,11 +86,21 @@ void Ball::updateXSpeed(float deltaTime)
             sf::Transformable::move(sf::Vector2f(m_CurrentXSpeed * deltaTime, 0.0f));
         }
     }
+
+    auto pButtons = m_pGame->getButtons();
+    for (auto& pButton : pButtons)
+    {
+        if (collidesWith(pButton))
+        {
+            pButton->setCollected(true);
+        }
+    }
 }
 
 void Ball::updateYSpeed(float deltaTime)
 {
     sf::Transformable::move(0.0f, m_CurrentYSpeed * deltaTime);
+
     auto pRectangles = m_pGame->getRectangles();
     for (auto& pRectangle : pRectangles)
     {
@@ -78,6 +108,15 @@ void Ball::updateYSpeed(float deltaTime)
         {
             m_CurrentYSpeed = -m_CurrentYSpeed;
             sf::Transformable::move(0.0f, m_CurrentYSpeed * deltaTime);
+        }
+    }
+
+    auto pButtons = m_pGame->getButtons();
+    for (auto& pButton : pButtons)
+    {
+        if (collidesWith(pButton))
+        {
+            pButton->setCollected(true);
         }
     }
 }

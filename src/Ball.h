@@ -5,6 +5,7 @@
 
 class Rectangle;
 class Game;
+class Button;
 
 class Ball : public sf::Drawable, public sf::Transformable
 {
@@ -13,6 +14,7 @@ public:
     virtual ~Ball() {}
     
     bool collidesWith(Rectangle* other);
+    bool collidesWith(Button* other);
 
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
