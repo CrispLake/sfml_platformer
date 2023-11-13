@@ -10,3 +10,15 @@ Door::Door(Game* pGame) :
 {
     Rectangle::setColor(sf::Color::Green);
 }
+
+void Door::setOpen()
+{
+    m_isOpen = true;
+    setColor(sf::Color::Green);
+}
+
+void Door::setLocked()
+{
+    m_isOpen = false;
+    setColor(sf::Color::Red);
+}

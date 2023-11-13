@@ -104,7 +104,7 @@ void Player::update(float deltaTime)
         }
     }
 
-    if (m_pGame->getDoor()->collidesWith(this))
+    if (m_pGame->getDoor()->collidesWith(this) && m_pGame->getDoor()->isOpen())
     {
         m_pGame->getDoor()->setTriggered(true);
     }

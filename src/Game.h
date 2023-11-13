@@ -79,6 +79,8 @@ private:
     int m_ballCount;
     float m_ballReloadTime;
     float m_ballThrowDelay;
+
+    int m_buttonCount;
     
     sf::Font m_font;
 };

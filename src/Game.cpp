@@ -23,7 +23,8 @@ Game::Game() :
     m_clearedLevels(0),
     m_ballCount(BallMaxCount),
     m_ballReloadTime(0),
-    m_ballThrowDelay(BallThrowDelay)
+    m_ballThrowDelay(BallThrowDelay),
+    m_buttonCount(0)
 {
     
     m_pGameInput = std::make_unique<GameInput>(this, m_pPlayer.get());
@@ -54,6 +55,7 @@ void Game::resetLevel(const int* tileMap)
     m_pCoins.clear();
     m_pRectangles.clear();
     m_pBalls.clear();
+    m_pButtons.clear();
     m_ballCount = BallMaxCount;
 
     m_pPlayer->setIsDead(false);
@@ -84,11 +86,17 @@ void Game::resetLevel(const int* tileMap)
                     break;
                 case    eTile::eButton:
                     m_pButtons.push_back(std::make_unique<Button>(CoinRadius, worldPos));
+                    m_buttonCount++;
                     break;
                 default:
                     break;
             }
         }
+    }
+
+    if (m_buttonCount > 0)
+    {
+        m_pDoor->setLocked();
     }
 }
 
@@ -113,7 +121,9 @@ void Game::update(float deltaTime)
 
             updateBallDelays(deltaTime);
             updateBallPhysics(deltaTime);
-            
+
+            if (m_buttonCount == 0)
+                m_pDoor->setOpen();
 
             if (m_pPlayer->isDead())
             {
@@ -162,6 +172,7 @@ void Game::update(float deltaTime)
         {
             std::swap(m_pButtons[i], m_pButtons.back());
             m_pButtons.pop_back();
+            m_buttonCount--;
             continue;
         }
         i++;
