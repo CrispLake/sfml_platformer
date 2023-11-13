@@ -112,6 +112,7 @@ void Game::update(float deltaTime)
                 m_clearedLevels++;
                 if (m_clearedLevels == LevelCount)
                 {
+                    m_pPlayer->clearCoins();
                     m_clearedLevels = 0;
                     m_score = 0;
                     m_state = State::WAITING;
