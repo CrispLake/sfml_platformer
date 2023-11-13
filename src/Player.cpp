@@ -5,6 +5,7 @@
 #include <vector>
 #include "Game.h"
 #include "Door.h"
+#include "Button.h"
 
 Player::Player(Game* pGame) : Rectangle(sf::Vector2f(PlayerWidth, PlayerHeight)), m_pGame(pGame)
 {
@@ -84,7 +85,6 @@ void Player::updatePhysics(float deltaTime)
 void Player::update(float deltaTime)
 {
     std::vector<Coin*> Coins = m_pGame->getCoins();
-    int i = 0;
 
     for (auto& temp : Coins)
     {
@@ -92,6 +92,15 @@ void Player::update(float deltaTime)
         {
             temp->setCollected(true);
             m_coins++;
+        }
+    }
+
+    std::vector<Button*> Buttons = m_pGame->getButtons();
+    for (auto& temp : Buttons)
+    {
+        if (temp->collidesWith(this))
+        {
+            temp->setCollected(true);
         }
     }
 

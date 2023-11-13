@@ -1,10 +1,10 @@
-#include "Coin.h"
+#include "Button.h"
 #include <SFML/Graphics.hpp>
 #include "Rectangle.h"
 #include "MathUtils.h"
 #include "Constants.h"
 
-Coin::Coin(float radius, sf::Vector2f position) : m_radius(radius)
+Button::Button(float radius, sf::Vector2f position) : m_radius(radius)
 {
     float rOffset = CoinRadius;
     position -= sf::Vector2f(rOffset, rOffset);
@@ -12,7 +12,7 @@ Coin::Coin(float radius, sf::Vector2f position) : m_radius(radius)
     sf::Transformable::setPosition(position);
 }
 
-bool Coin::collidesWith(Rectangle* other)
+bool Button::collidesWith(Rectangle* other)
 {
     sf::Vector2f otherPosition = other->getPosition();
     sf::Vector2f otherSize = other->getSize();
@@ -31,28 +31,28 @@ bool Coin::collidesWith(Rectangle* other)
     return false;
 }
 
-void Coin::draw(sf::RenderTarget &target, sf::RenderStates states) const
+void Button::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     sf::CircleShape graphicsCircle(m_radius);
 
-    graphicsCircle.setFillColor(sf::Color::Yellow);
+    graphicsCircle.setFillColor(sf::Color::Green);
     graphicsCircle.setPosition(getPosition());
     target.draw(graphicsCircle);
 }
 
-sf::Vector2f Coin::getCenter()
+sf::Vector2f Button::getCenter()
 {
     float rOffset = m_radius * 0.5f;
 
     return getPosition() + sf::Vector2f(rOffset, rOffset);
 }
 
-void Coin::setCollected(bool isCollected)
+void Button::setCollected(bool isCollected)
 {
     m_isCollected = isCollected;
 }
 
-bool Coin::getCollected()
+bool Button::getCollected()
 {
     return m_isCollected;
 }

@@ -14,6 +14,7 @@ class Rectangle;
 class Coin;
 class Door;
 class Ball;
+class Button;
 
 struct InputData;
 
@@ -54,6 +55,7 @@ public:
     std::vector<Rectangle*> getRectangles() const;
     std::vector<Coin*>      getCoins() const;
     std::vector<Ball*>      getBalls() const;
+    std::vector<Button*>    getButtons() const;
 
 
 private:
@@ -62,7 +64,9 @@ private:
 
     std::vector<std::unique_ptr<Rectangle>> m_pRectangles;
     std::vector<std::unique_ptr<Coin>> m_pCoins;
+
     std::vector<std::unique_ptr<Ball>> m_pBalls;
+    std::vector<std::unique_ptr<Button>> m_pButtons;
 
     State m_state;
     std::unique_ptr<sf::Clock> m_pClock;

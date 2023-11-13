@@ -12,6 +12,7 @@
 #include "Door.h"
 #include "Ball.h"
 #include "Maps.h"
+#include "Button.h"
 
 Game::Game() :
     m_state(State::WAITING),
@@ -80,6 +81,9 @@ void Game::resetLevel(const int* tileMap)
                     break;
                 case    eTile::eDoor:
                     m_pDoor->setPosition(worldPos);
+                    break;
+                case    eTile::eButton:
+                    m_pButtons.push_back(std::make_unique<Button>(CoinRadius, worldPos));
                     break;
                 default:
                     break;
@@ -150,6 +154,18 @@ void Game::update(float deltaTime)
         }
         i++;
     }
+
+    i = 0;
+    while (i < m_pButtons.size())
+    {
+        if (m_pButtons[i]->getCollected())
+        {
+            std::swap(m_pButtons[i], m_pButtons.back());
+            m_pButtons.pop_back();
+            continue;
+        }
+        i++;
+    }
 }
 
 void Game::draw(sf::RenderTarget &target, sf::RenderStates states) const
@@ -198,6 +214,10 @@ void Game::draw(sf::RenderTarget &target, sf::RenderStates states) const
         temp->draw(target, states);
     }
     for (auto& temp : m_pBalls)
+    {
+        temp->draw(target, states);
+    }
+    for (auto& temp : m_pButtons)
     {
         temp->draw(target, states);
     }
@@ -313,6 +333,17 @@ std::vector<Ball*> Game::getBalls() const
         pBalls.push_back(temp.get());
     }
     return pBalls;
+}
+
+std::vector<Button*> Game::getButtons() const
+{
+    std::vector<Button*> pButtons;
+
+    for (auto& temp : m_pButtons)
+    {
+        pButtons.push_back(temp.get());
+    }
+    return pButtons;
 }
 
 std::vector<Rectangle*> Game::getRectangles() const
